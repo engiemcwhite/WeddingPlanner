@@ -1,0 +1,60 @@
+<html>
+    <head>
+       <meta charset='utf-8'>
+       <title>Weddings</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="~/css/style.css"/>
+    </head>
+    <body>
+        <h1>Welcome to the Wedding Planner</h1>
+        <a href="/logout">Log Out</a> <br>
+        <table>
+            <tr>
+                <th>Wedding &nbsp; &nbsp;</th>
+                <th>Date &nbsp; &nbsp;</th>
+                <th>Guest &nbsp; &nbsp;</th>
+                <th>Action &nbsp; &nbsp; </th>
+            </tr>
+            @{
+                foreach(var wedding in ViewBag.AllWeddings){
+                    <tr>
+                        <td><a href=/weddings/@wedding.WeddingId>@wedding.Wedder1 & @wedding.Wedder2</a></td>
+                        <td>@wedding.Date.ToString("MMM d, yyyy") &nbsp; &nbsp;</td>
+                        <td>@wedding.Guests.Count</td>
+                        @if(wedding.UserId == ViewBag.Id){
+                            <td><a href=/delete/@wedding.WeddingId>Delete</a></td>
+                        }
+                        else{
+                            Boolean isrsvp = false; 
+                            foreach(var guest in wedding.Guests){
+                                if(guest.UserId == ViewBag.Id){
+                                    isrsvp = true;
+                                    break;
+                                }
+                            }
+                            if(isrsvp == true){
+                                <td><a href=/unrsvp/@wedding.WeddingId>Un-RSVP</a></td>
+                            }
+                            else{
+                                <td><a href=/rsvp/@wedding.WeddingId>RSVP</a></td>
+                            }
+                        }
+                    </tr>
+                }    
+            }
+        </table>
+        <form action="/planwedding">
+            <button type="submit">Add a new wedding</button>
+        </form>
+
+        @{
+            foreach(var wed in ViewBag.Temp){
+                if(wed.UserId == ViewBag.Id){
+                    foreach(var rsvp in wed.Rsvps){
+                        <p>RSVP'd for @rsvp.WeddingId</p>
+                    }
+                }
+            }
+        }
+    </body>
+</html>

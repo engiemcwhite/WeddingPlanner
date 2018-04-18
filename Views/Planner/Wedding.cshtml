@@ -1,0 +1,22 @@
+<html>
+    <head>
+       <meta charset='utf-8'>
+       <title>Weddings</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="~/css/style.css"/>
+    </head>
+    <body>
+        <h1>@ViewBag.Wedding[0].Wedder1 & @ViewBag.Wedding[0].Wedder2 's wedding</h1>
+        <a href="/logout">Log Out</a>
+        <a href="/dashboard">Dashboard</a><br>
+        <h3>Date: @ViewBag.Wedding[0].Date.ToString("MMMM d, yyyy")</h3>
+        <h3>Guests:</h3>
+        @{
+            foreach(var guest in ViewBag.Wedding[0].Guests){
+                <span>@guest.User.FirstName @guest.User.LastName</span> <br>
+            }
+        }
+        <h3>Address: @ViewBag.Wedding[0].Address</h3>
+        
+    </body>
+</html>
